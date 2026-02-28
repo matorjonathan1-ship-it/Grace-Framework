@@ -1,3 +1,5 @@
+![Build Status](https://github.com/matorjonathan1-ship-it/Grace-Framework/actions/workflows/ci.yml/badge.svg)
+
 # Grace
 
 > "The most dangerous phrase in the language is, 'We’ve always done it this way.'" — **Rear Admiral Grace Hopper**
