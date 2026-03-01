@@ -1,12 +1,18 @@
+#include "../include/grace/router.hpp"
 #include <iostream>
 
 int main() {
+    grace::Router router;
+
+    // This sets up the 'welcome' radio frequency
+    router.get("/api/v1/welcome", [](auto& req, auto& res) {
+        res.json("{\"text\":\"Welcome to Grace. The Theorem is Proven.\", \"code\":1}");
+    });
+
     std::cout << "⚓ Grace Engine deployed on port 8080..." << std::endl;
-    
-    // The Theorem: This loop keeps the process alive in the Linux Kernel
-    while(true) {
-        // High-performance idle
-    }
-    
+
+    grace::Engine engine;
+    engine.run(router); // Passing the router to the engine room
+
     return 0;
 }
