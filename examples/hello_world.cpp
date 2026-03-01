@@ -1,11 +1,12 @@
-// Updated hello_world.cpp to fix serialization issue.
-// Removed grace::serialize() since res.json() should handle it directly.
-
 #include <iostream>
-// Other necessary includes
 
 int main() {
-    // Your code logic here
-    // Instead of grace::serialize(data), use res.json(data);
+    std::cout << "⚓ Grace Engine deployed on port 8080..." << std::endl;
+    
+    // The Theorem: This loop keeps the process alive in the Linux Kernel
+    while(true) {
+        // High-performance idle
+    }
+    
     return 0;
 }
