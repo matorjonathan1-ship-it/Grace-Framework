@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
     - name: Install Dependencies
       run: |
@@ -20,8 +21,12 @@ jobs:
 
     - name: Configure CMake
       run: |
-        cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-13
+        cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-13 -DCMAKE_BUILD_TYPE=Release
 
     - name: Build Grace
       run: |
-        cmake --build build
+        cmake --build build --config Release
+
+    - name: Verify Build
+      run: |
+        ls -R build
