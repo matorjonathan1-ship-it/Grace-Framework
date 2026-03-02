@@ -139,3 +139,19 @@ namespace grace {
     };
 }
 #endif
+
+## 🛠 Prerequisites
+
+Grace is built for modern Linux systems to leverage maximum I/O throughput.
+
+* **Operating System**: Linux (Kernel 5.1+ required; 5.11+ recommended).
+* **Compiler**: GCC 13+ (Requires C++20 support).
+* **Dependencies**: 
+    * `liburing-dev` (The core asynchronous I/O library).
+    * `cmake` (version 3.10 or higher).
+
+### Installing Dependencies (Ubuntu/Debian)
+```bash
+sudo apt update
+sudo apt install liburing-dev cmake g++-13
+```
