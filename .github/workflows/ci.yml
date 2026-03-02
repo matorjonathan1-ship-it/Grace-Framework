@@ -2,31 +2,27 @@ name: Grace Framework CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake liburing-dev g++-13
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt-get update
+        sudo apt-get install -y liburing-dev g++-13
 
     - name: Configure CMake
-      run: |
-        cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-13 -DCMAKE_BUILD_TYPE=Release
+      run: cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-13
 
-    - name: Build Grace
-      run: |
-        cmake --build build --config Release
-
-    - name: Verify Build
-      run: |
-        ls -R build
+    - name: Build
+      run: cmake --build build
