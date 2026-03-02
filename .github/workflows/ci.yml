@@ -11,18 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-        sudo apt-get update
-        sudo apt-get install -y liburing-dev g++-13
+      - name: Install C++13 and io_uring
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+          sudo apt-get update
+          sudo apt-get install -y g++-13 liburing-dev
 
-    - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-13
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-13
 
-    - name: Build
+      - name: Build
+        run: cmake --build build
       run: cmake --build build
