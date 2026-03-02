@@ -1,2 +1,0 @@
-/usr/bin/ar qc libgrace_core.a CMakeFiles/grace_core.dir/src/engine.cpp.o
-/usr/bin/ranlib libgrace_core.a
