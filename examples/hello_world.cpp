@@ -3,16 +3,11 @@
 
 // 1. Define the data structure the Engine can understand
 struct WelcomeMessage {
-    std::string text;
-    int code;
-
-    // The 'Reflection' hook
-    auto reflect_members() {
-        return std::tie(text, code);
+    std::string message;
+    std::string to_json() const {
+        return "{\"message\":\"" + message + "\"}";
     }
-    static constexpr bool is_grace_reflected = true;
 };
-
 int main() {
     grace::Router router;
 
