@@ -1,41 +1,29 @@
-#ifndef GRACE_JSON_HPP
-#define GRACE_JSON_HPP
-
-#include "reflect.hpp"
+#pragma once
 #include <string>
-#include <tuple>
 #include <type_traits>
 
 namespace grace {
+    template<typename T>
+    std::string serialize(const T& val) {
+        if constexpr (std::is_same_v<std::decay_t<T>, std::string>) {
+            return "\"" + val + "\"";
+        } else if constexpr (std::is_arithmetic_v<std::decay_t<T>>) {
+            return std::to_string(val);
+        } else {
+            return "\"{object}\""; // Fallback for complex types
+        }
+    }
 
-/**
- * @brief The Commodore's High-Speed Serializer
- * Uses a fold expression to build the string without requiring 
- * heavy external formatting libraries.
- */
-template <Reflected T>
-std::string serialize(T& obj) {
-    std::string result = "{";
-    auto members = obj.reflect_members();
-
-    std::apply([&result](auto&&... args) {
+    template<typename... Args>
+    std::string to_json(Args&&... args) {
+        std::string result = "{";
         int i = 0;
-        ((
-            result += (i == 0 ? "" : ","),
-            result += "\"field_" + std::to_string(i) + "\":",
-            if constexpr (std::is_same_v<std::decay_t<decltype(args)>, std::string>) {
-                result += "\"" + args + "\"";
-            } else {
-                result += std::to_string(args);
-            }
-            , ++i
-        ), ...);
-    }, members);
-
-    result += "}";
-    return result;
+        ([&](auto& arg) {
+            result += "\"field_" + std::to_string(i++) + "\":";
+            result += serialize(arg);
+            if (i < sizeof...(args)) result += ",";
+        }(args), ...);
+        result += "}";
+        return result;
+    }
 }
-
-} // namespace grace
-
-#endif // GRACE_JSON_HPP

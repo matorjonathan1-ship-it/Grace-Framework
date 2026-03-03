@@ -1,3 +1,4 @@
+#include "reflect.hpp"
 #ifndef GRACE_ROUTER_HPP
 #define GRACE_ROUTER_HPP
 
@@ -28,7 +29,7 @@ struct Response {
      */
     template <Reflected T>
     void json(T& data) {
-        this->body = grace::serialize(data);
+        this->body = grace::to_json(data);
     }
 
     void send(std::string_view raw_text) {
