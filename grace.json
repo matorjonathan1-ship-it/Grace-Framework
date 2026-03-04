@@ -1,0 +1,7 @@
+{
+    "name": "Grace-Framework",
+    "version": "0.1.0",
+    "dependencies": {
+        "grace-utils": "https://github.com/nlohmann/json.git"
+    }
+}

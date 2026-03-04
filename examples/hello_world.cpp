@@ -1,25 +1,22 @@
-#include "../include/grace/router.hpp"
+#include "grace/router.hpp"
+#include "grace/engine.hpp"
 #include <iostream>
 
-// 1. Define the data structure the Engine can understand
+// Simplified struct to match the logic
 struct WelcomeMessage {
-    std::string message;
-    std::string to_json() const {
-        return "{\"message\":\"" + message + "\"}";
-    }
+    std::string text;
 };
+
 int main() {
     grace::Router router;
 
-    router.get("/api/v1/welcome", [](auto& req, auto& res) {
-        // 2. Use the struct instead of a raw string
-        WelcomeMessage msg{"Welcome to Grace. The Theorem is Proven.", 1};
+    router.get("/", [](auto& req, auto& res) {
+        // Only one initializer here to match the struct above
+        WelcomeMessage msg{"Welcome to Grace. The Theorem is Proven."};
         res.json(msg);
     });
 
-    std::cout << "⚓ Grace Engine deployed on port 8080..." << std::endl;
-
-    // 3. Proper Engine initialization
+    // This will work now because we moved engine.hpp into include/grace/
     grace::Engine engine;
     engine.run(router);
 

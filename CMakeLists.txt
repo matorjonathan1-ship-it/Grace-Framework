@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.20)
 project(Grace VERSION 0.1.0 LANGUAGES CXX)
 
+# --- 🚀 AUTOMATION: Run Grace Packet Manager ---
+execute_process(
+    COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/gpm.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+# -----------------------------------------------
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -13,7 +20,6 @@ target_include_directories(grace_api INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/inclu
 
 # 3. Build the Compiled Core (The Engine Room)
 add_library(grace_core STATIC src/engine.cpp)
-# We link grace_api to grace_core so engine.cpp can see the headers
 target_link_libraries(grace_core PUBLIC grace_api PRIVATE ${URING_LIB})
 
 # 4. Create an executable for our Hello World example
