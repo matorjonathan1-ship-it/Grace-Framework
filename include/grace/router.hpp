@@ -1,63 +1,43 @@
-#include "reflect.hpp"
-#ifndef GRACE_ROUTER_HPP
-#define GRACE_ROUTER_HPP
-
-#include "json.hpp" // Connect the voice to the brain
-#include <string_view>
+#pragma once
+#include <iostream>
+#include <string>
+#include <unordered_map>
 #include <functional>
-#include <map>
+#include <string_view>
 #include <concepts>
 
 namespace grace {
 
-struct Request { 
-    std::string_view path; 
-    std::string_view method;
-};
-
-/**
- * @brief The Commodore's Response Object
- * This is where the "Strict" philosophy meets the web.
- */
-struct Response {
+struct Request { std::string path; };
+struct Response { 
     std::string body;
-    int status = 200;
-
-    /**
-     * @brief Serialize reflected data
-     * This method is only available if the data has been 'Proved' via GRACE_REFLECT.
-     */
-    template <Reflected T>
-    void json(T& data) {
-        this->body = grace::to_json(data);
-    }
-
-    void send(std::string_view raw_text) {
-        this->body = raw_text;
-    }
+    void json(auto data) { this->body = "{ \"status\": \"success\" }"; }
 };
 
-/**
- * @brief Handler Concept
- * Ensures the developer's function matches the Admiral's specifications.
- */
-template<typename F>
-concept GraceHandler = requires(F f, Request& req, Response& res) {
-    { f(req, res) } -> std::same_as<void>;
+template<typename H>
+concept GraceHandler = requires(H h, Request& req, Response& res) {
+    { h(req, res) } -> std::same_as<void>;
 };
 
 class Router {
 public:
+    // We store handlers as type-erased functions
+    using HandlerFunc = std::function<void(Request&, Response&)>;
+    std::unordered_map<std::string, HandlerFunc> routes;
+
     template<GraceHandler H>
-    void get(std::string_view path, H handler) {
-        routes_["GET"][path] = handler;
+    void get(std::string path, H handler) {
+        std::cout << "📍 Registered: " << path << std::endl;
+        routes[path] = handler;
     }
 
-private:
-    // High-performance route mapping: Method -> Path -> Handler
-    std::map<std::string_view, std::map<std::string_view, std::function<void(Request&, Response&)>>> routes_;
+    void dispatch(Request& req, Response& res) {
+        if (routes.contains(req.path)) {
+            routes[req.path](req, res);
+        } else {
+            res.body = "HTTP/1.1 404 Not Found\r\n\r\n404 - Theorem Not Found";
+        }
+    }
 };
 
 } // namespace grace
-
-#endif // GRACE_ROUTER_HPP
