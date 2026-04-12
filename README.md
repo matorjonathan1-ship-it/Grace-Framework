@@ -1,14 +1,14 @@
-# ⚓ Grace Framework
+# Grace Framework
 **A High-Performance, Asynchronous C++ Web Framework powered by io_uring.**
 
 Grace is built for developers who need sub-millisecond latency and the raw power of the Linux kernel. 
 
-### 🚀 Performance
+### Performance
 - **Avg. Latency:** 16μs - 40μs
 - **Engine:** Linux `io_uring` (Non-blocking I/O)
 - **Language:** C++20
 
-### 📦 Quick Start
+### Quick Start
 Grace is a **single-header library**. Just drop `grace.hpp` into your project.
 
 ```cpp
@@ -25,17 +25,17 @@ int main() {
 }
 
 cat << 'EOF' > ../README.md
-# ⚓ Grace Framework
+# Grace Framework
 **A High-Performance, Asynchronous C++ Web Framework powered by io_uring.**
 
 Grace is built for developers who need sub-millisecond latency and the raw power of the Linux kernel. 
 
-### 🚀 Performance
+### Performance
 - **Avg. Latency:** 16μs - 40μs
 - **Engine:** Linux `io_uring` (Non-blocking I/O)
 - **Language:** C++20
 
-### 📦 Quick Start
+### Quick Start
 Grace is a **single-header library**. Just drop `grace.hpp` into your project.
 
 ```cpp
