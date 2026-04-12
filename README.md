@@ -140,7 +140,7 @@ namespace grace {
 }
 #endif
 
-## 🛠 Prerequisites
+## Prerequisites
 
 Grace is built for modern Linux systems to leverage maximum I/O throughput.
 
